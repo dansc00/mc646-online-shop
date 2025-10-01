@@ -7,7 +7,6 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-import jakarta.validation.ValidatorFactory;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -17,8 +16,6 @@ import myapp.domain.Product;
 import myapp.domain.enumeration.ProductStatus;
 import myapp.repository.ProductRepository;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,12 +27,15 @@ public class ProductServiceTest {
 
     private static Validator validator;
 
+    // execute one time before all tests
     @BeforeAll
     public static void setUpValidator() {
+        //verify if the object is valid according to the annotations
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
     }
 
+    // mock to simulate the repository behavior
     @Mock
     private ProductRepository productRepository;
 
@@ -56,6 +56,7 @@ public class ProductServiceTest {
         Double weight,
         Instant dateAdded
     ) {
+        //Create a Product instance with given parameters
         Product product = new Product()
             .id(id)
             .title(title)
@@ -72,7 +73,7 @@ public class ProductServiceTest {
         return product;
     }
 
-    // BEGIN TEST CASES - (with example for Titile)
+    // BEGIN TEST CASES - (with example for Title)
     @Test
     public void testTitleEquivalencePartitionTitle() {
         //Valid case Title == 3 char
