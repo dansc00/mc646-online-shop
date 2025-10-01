@@ -329,7 +329,7 @@ public class ProductServiceCombinationsTest {
 
         // Generate report document: compact Markdown table only
         try {
-            Path outDir = Paths.get("target", "test-reports");
+            Path outDir = Paths.get(".", "test-reports");
             Files.createDirectories(outDir);
             Path report = outDir.resolve("product-combinations-report.md");
 
