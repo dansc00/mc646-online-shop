@@ -27,8 +27,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 public class ProductServiceCombinationsTest {
 
     private static Validator validator;
-    private static int validCases;
-    private static int invalidCases;
+    private static int totalCases;
 
     // Lists for reporting
     private static final List<String> passed = Collections.synchronizedList(new ArrayList<>());
@@ -186,7 +185,7 @@ public class ProductServiceCombinationsTest {
     }
 
     @ParameterizedTest(name = "Valid combination #{index} - title='{0}'")
-    @CsvFileSource(resources = "/pict/valid_test_cases.txt", delimiter = '\t', numLinesToSkip = 1)
+    @CsvFileSource(resources = "/pict/valid_test_cases.csv", delimiter = '\t', numLinesToSkip = 1)
     void validCombinationsFromPict(
         String title,
         String keywords,
@@ -201,7 +200,7 @@ public class ProductServiceCombinationsTest {
         String dateModifiedStr,
         TestInfo testInfo
     ) {
-        validCases++;
+        totalCases++;
         Product product = buildProduct(
             title,
             keywords,
@@ -224,7 +223,7 @@ public class ProductServiceCombinationsTest {
         }
         // Record compact row for report (inputs + result)
         tableRows.add(
-            "| " +
+            "| valid | " +
             cell(title) +
             " | " +
             cell(keywords) +
@@ -253,9 +252,9 @@ public class ProductServiceCombinationsTest {
         assertTrue(ok, "violations: " + violations);
     }
 
-    @ParameterizedTest(name = "Invalid combination #{index} - title='{0}'")
-    @CsvFileSource(resources = "/pict/invalid_test_cases.txt", delimiter = '\t', numLinesToSkip = 1)
-    void invalidCombinationsFromPict(
+    @ParameterizedTest(name = "Invalid title combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_title_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidTitleCombinationsFromPict(
         String title,
         String keywords,
         String description,
@@ -269,7 +268,7 @@ public class ProductServiceCombinationsTest {
         String dateModifiedStr,
         TestInfo testInfo
     ) {
-        invalidCases++;
+        totalCases++;
         Product product = buildProduct(
             title,
             keywords,
@@ -293,7 +292,697 @@ public class ProductServiceCombinationsTest {
         }
         // Record compact row for report (inputs + result)
         tableRows.add(
-            "| " +
+            "| title | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid keywords combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_keywords_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidKeywordsCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| keywords | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid description combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_description_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidDescriptionCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| description | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid rating combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_rating_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidRatingCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| rating | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid price combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_price_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidPriceCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| price | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid quantity combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_quantity_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidQuantityCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| quantity | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid status combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_status_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidStatusCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| status | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid weight combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_weight_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidWeightCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| weight | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid dimensions combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_dimensions_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidDimensionsCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| dimensions | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid dateAdded combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_dateAdded_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidDateAddedCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| dateAdded | " +
+            cell(title) +
+            " | " +
+            cell(keywords) +
+            " | " +
+            cell(description) +
+            " | " +
+            cell(ratingStr) +
+            " | " +
+            cell(priceStr) +
+            " | " +
+            cell(quantityStr) +
+            " | " +
+            cell(statusStr) +
+            " | " +
+            cell(weightStr) +
+            " | " +
+            cell(dimensions) +
+            " | " +
+            cell(dateAddedStr) +
+            " | " +
+            cell(dateModifiedStr) +
+            " | " +
+            (ok ? "PASS" : "FAIL") +
+            " |"
+        );
+        assertTrue(ok, "violations: " + violations);
+    }
+
+    @ParameterizedTest(name = "Invalid dateModified combination #{index} - title='{0}'")
+    @CsvFileSource(resources = "/pict/invalid_dateModified_cases.csv", delimiter = '\t', numLinesToSkip = 1)
+    void invalidDateModifiedCombinationsFromPict(
+        String title,
+        String keywords,
+        String description,
+        String ratingStr,
+        String priceStr,
+        String quantityStr,
+        String statusStr,
+        String weightStr,
+        String dimensions,
+        String dateAddedStr,
+        String dateModifiedStr,
+        TestInfo testInfo
+    ) {
+        totalCases++;
+        Product product = buildProduct(
+            title,
+            keywords,
+            description,
+            ratingStr,
+            priceStr,
+            quantityStr,
+            statusStr,
+            weightStr,
+            dimensions,
+            dateAddedStr,
+            dateModifiedStr
+        );
+        Set<ConstraintViolation<Product>> violations = validator.validate(product);
+        boolean ok = violations.isEmpty();
+
+        if (ok) {
+            passed.add(testInfo.getDisplayName());
+        } else {
+            failed.add(testInfo.getDisplayName());
+        }
+        // Record compact row for report (inputs + result)
+        tableRows.add(
+            "| dateModified | " +
             cell(title) +
             " | " +
             cell(keywords) +
@@ -324,20 +1013,19 @@ public class ProductServiceCombinationsTest {
 
     @AfterAll
     public static void ensureDataLoaded() {
-        assertTrue(validCases > 0, "No rows loaded from /pict/valid_test_cases.txt; parameterized test did not run.");
-        assertTrue(invalidCases > 0, "No rows loaded from /pict/invalid_test_cases.txt; parameterized test did not run.");
+        assertTrue(totalCases > 0, "No test cases loaded; parameterized tests did not run.");
 
         // Generate report document: compact Markdown table only
         try {
             Path outDir = Paths.get(".", "test-reports");
             Files.createDirectories(outDir);
-            Path report = outDir.resolve("product-combinations-report.md");
+            Path report = outDir.resolve("report.md");
 
             StringBuilder sb = new StringBuilder();
             sb.append(
-                "| title | keywords | description | rating | price | quantity | status | weight | dimensions | dateAdded | dateModified | result |\n"
+                "| attribute | title | keywords | description | rating | price | quantity | status | weight | dimensions | dateAdded | dateModified | result |\n"
             );
-            sb.append("|-|-|-|-|-|-|-|-|-|-|-|-|\n");
+            sb.append("|-|-|-|-|-|-|-|-|-|-|-|-|-|\n");
             for (String row : tableRows) {
                 sb.append(row).append('\n');
             }
